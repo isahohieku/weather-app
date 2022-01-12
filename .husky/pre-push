@@ -1,1 +1,1 @@
-yarn lint:fix & yarn lint:prettier
+yarn lint:fix & yarn prettier:fix
