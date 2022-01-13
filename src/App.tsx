@@ -5,6 +5,9 @@ import MainWeatherInfo from './organisms/main-weather-info';
 import SearchBar from './organisms/search-bar';
 
 const App = () => {
+  const onSearch = () => {
+    return;
+  };
   return (
     <Container>
       {/* Toggle Row */}
@@ -16,7 +19,7 @@ const App = () => {
       {/* Search bar */}
       <Row>
         <Col className="d-flex justify-content-center">
-          <SearchBar />
+          <SearchBar onSearch={onSearch} />
         </Col>
       </Row>
       {/* Search bar */}
