@@ -1,4 +1,6 @@
-export const mockWeather = {
+import type { WeatherResponse } from '../../types/weather';
+
+export const mockWeather: WeatherResponse = {
   coord: { lon: 7.4898, lat: 9.0574 },
   weather: [{ id: 804, main: 'Clouds', description: 'overcast clouds', icon: '04d' }],
   base: 'stations',
@@ -20,7 +22,12 @@ export const mockWeather = {
   timezone: 3600,
   id: 2352778,
   name: 'Abuja',
-  cod: 200,
+};
+
+export const mockErrorNotFoundCity = {
+  message: 'city not found',
+  cod: '404',
 };
 
 export const mockCity = 'Abuja';
+export const mockFalseCity = 'NeverExistingLand';

@@ -1,27 +1,30 @@
 import type { ShallowWrapper } from 'enzyme';
+import { mount } from 'enzyme';
 import { shallow } from 'enzyme';
-import { rest } from 'msw';
-import { setupServer } from 'msw/node';
+import { waitFor, screen } from '@testing-library/react';
+import type { AxiosError, AxiosResponse } from 'axios';
+import mockAxios from 'jest-mock-axios';
 import App from './App';
-import { API_BASE_URL } from './constants';
-import { mockCity, mockWeather } from './libs/mock-data/weather';
+import {
+  mockCity,
+  mockErrorNotFoundCity,
+  mockFalseCity,
+  mockWeather,
+} from './libs/mock-data/weather';
 import UnitSelector from './molecules/unit-selector';
 import DetailedWeatherInfo from './organisms/detailed-weather-info';
 import MainWeatherInfo from './organisms/main-weather-info';
 import SearchBar from './organisms/search-bar';
-
-const server = setupServer(
-  rest.get(`${API_BASE_URL as string}/q=${mockCity}`, (req, res, ctx) => {
-    return res(ctx.json(mockWeather));
-  }),
-);
-
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+import type { WeatherErrorResponse, WeatherResponse } from './types/weather';
+import { getWeatherReport } from './services/weather';
+import { waitForComponentToPaint } from './utils/functions';
 
 describe('App', () => {
   let container: ShallowWrapper;
+
+  afterEach(() => {
+    mockAxios.reset();
+  });
 
   beforeEach(() => (container = shallow(<App />)));
 
@@ -42,11 +45,62 @@ describe('App', () => {
     expect(container.containsMatchingElement(<DetailedWeatherInfo />)).toBeTruthy();
   });
 
-  //   test('Should make an API call for a searched city and be displayed', () =>  {
+  test('Should make an API call for a searched city and be displayed', async () => {
+    const wrapper = mount(<App />);
+    const searchInput = wrapper.find('#search').first();
+    const button = wrapper.find('button').first();
+    searchInput.simulate('change', { target: { value: mockCity } });
 
-  //   });
+    button.simulate('click');
 
-  //   test('Should make an API call for a searched city and throw error', () =>  {
+    const data = await getWeatherReport(mockCity);
 
-  // });
+    const mockedResponse: AxiosResponse<WeatherResponse> = {
+      data: mockWeather,
+      status: 200,
+      statusText: 'OK',
+      headers: {},
+      config: {},
+    };
+
+    mockAxios.get.mockResolvedValue(mockedResponse);
+
+    waitForComponentToPaint(wrapper, 1000);
+
+    expect(typeof data).toBe(typeof mockWeather);
+
+    await waitFor(() => screen.getByText(mockCity));
+  });
+
+  test('Should make an API call for aa unknown city and throw error', async () => {
+    const mockedResponse: AxiosError<WeatherErrorResponse> = {
+      response: {
+        data: mockErrorNotFoundCity,
+        status: 404,
+        statusText: 'OK',
+        headers: {},
+        config: {},
+      },
+      config: {},
+      message: mockErrorNotFoundCity.message,
+      name: 'Just Error',
+      toJSON: () => {
+        return {};
+      },
+      isAxiosError: true,
+    };
+
+    mockAxios.get.mockRejectedValueOnce(mockedResponse);
+
+    const wrapper = mount(<App />);
+    const searchInput = wrapper.find('#search').first();
+    const button = wrapper.find('button').first();
+    searchInput.simulate('change', { target: { value: mockFalseCity } });
+
+    button.simulate('click');
+
+    const data = await getWeatherReport(mockFalseCity);
+
+    expect(data).toEqual(expect.stringContaining(mockErrorNotFoundCity.message));
+  });
 });

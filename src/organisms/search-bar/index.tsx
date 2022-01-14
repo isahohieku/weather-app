@@ -30,8 +30,8 @@ const SearchBar = ({ onSearch }: ISearchBar) => {
     <Container>
       <Row>
         <Col>
-          <Input onChange={onChange} />
-          <Button onClick={() => searchCity()} />
+          <Input onChange={onChange} id="search" />
+          <Button onClick={() => searchCity()} innerText="Search" />
         </Col>
       </Row>
     </Container>

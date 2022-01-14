@@ -21,7 +21,7 @@ describe('Search Bar', () => {
 
   test('Should contain a search form control component', () => {
     const onChange = jest.fn();
-    expect(container.find(<Input onChange={onChange} />)).toBeTruthy();
+    expect(container.find(<Input id="search" onChange={onChange} />)).toBeTruthy();
   });
 
   test('Should call props onSubmit if the input has value', () => {
