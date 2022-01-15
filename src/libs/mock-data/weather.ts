@@ -1,9 +1,10 @@
 import type { WeatherResponse } from '../../types/weather';
+import { Conditions } from '../../types/weather';
 import { getRandomCoordinate } from '../../utils/functions';
 
 export const mockWeather: WeatherResponse = {
   coord: { lon: 7.4898, lat: 9.0574 },
-  weather: [{ id: 804, main: 'Clouds', description: 'overcast clouds', icon: '04d' }],
+  weather: [{ id: 804, main: Conditions.Clouds, description: 'overcast clouds', icon: '04d' }],
   base: 'stations',
   main: {
     temp: 298.76,

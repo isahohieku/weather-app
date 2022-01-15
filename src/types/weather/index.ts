@@ -1,6 +1,13 @@
+export enum Conditions {
+  Clouds = 'Clouds',
+  Rain = 'Rain',
+  Clear = 'Clear',
+  Snow = 'Snow',
+}
+
 interface IWeather {
   id: number;
-  main: string;
+  main: Conditions;
   description: string;
   icon: string;
 }
