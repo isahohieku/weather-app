@@ -33,7 +33,7 @@ const SearchBar = ({ onSearch }: ISearchBar) => {
       <Row className="d-flex justify-content-center">
         <Col md={6} className="d-flex">
           <div className={styles.inputWrapper}>
-            <MapPin /> <Input onChange={onChange} id="search" />
+            <MapPin /> <Input onChange={onChange} id="search" placeholder="Search City" />
           </div>
           <Button onClick={() => searchCity()} innerText="Search" className={styles.button} />
         </Col>
