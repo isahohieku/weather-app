@@ -1,0 +1,21 @@
+.wrapper {
+  width: 300px;
+  height: 400px;
+  border-radius: 20px;
+  background-color: var(--sky-blue);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+
+  h4 {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .temperature {
+    font-weight: bold;
+    font-size: 64px;
+    margin-bottom: 0;
+  }
+}

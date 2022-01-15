@@ -1,6 +1,6 @@
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import _axios from 'axios';
-import { API_BASE_URL, API_KEY } from '../../constants';
+import { API_BASE_URL, API_KEY, UNIT } from '../../constants';
 import type { IApiSuccessResponse } from './types';
 
 const axios = _axios.create({
@@ -18,6 +18,7 @@ axios.interceptors.request.use(
     const appid = API_KEY;
     if (appid) {
       config.params['appid'] = appid;
+      config.params['units'] = UNIT;
     }
     return config;
   },

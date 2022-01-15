@@ -68,7 +68,7 @@ const App = () => {
       </Row>
       {/* Search bar */}
       <Row>
-        <Col className="d-flex justify-content-center align-items-center">
+        <Col className="d-flex justify-content-center align-items-center mt-5">
           {!loading && !hasError && weatherReport && (
             <MainWeatherInfo weatherReport={weatherReport} />
           )}
