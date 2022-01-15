@@ -37,8 +37,3 @@ jobs:
         uses: borales/actions-yarn@v2.3.0
         with:
           cmd: build
-      - name: 'Deploy to netlify'
-        uses: jsmrcaga/action-netlify-deploy@v1.1.0
-        with:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN_SECRET }}
-          NETLIFY_DEPLOY_TO_PROD: true
