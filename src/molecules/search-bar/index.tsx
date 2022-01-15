@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import type { FormControlProps } from 'react-bootstrap';
 import { Col, Container, Row } from 'react-bootstrap';
+import { MapPin } from 'react-feather';
 import Button from '../../atoms/button';
 import Input from '../../atoms/input';
+import styles from './styles.module.scss';
 
 interface InputEvent extends FormControlProps {
   target: {
@@ -27,11 +29,18 @@ const SearchBar = ({ onSearch }: ISearchBar) => {
   };
 
   return (
-    <Container>
-      <Row>
-        <Col>
-          <Input onChange={onChange} />
-          <Button onClick={() => searchCity()} />
+    <Container className="mt-5">
+      <Row className="d-flex justify-content-center">
+        <Col md={6} className="d-flex">
+          <div className={styles.inputWrapper}>
+            <MapPin /> <Input onChange={onChange} id="search" placeholder="Search City" />
+          </div>
+          <Button
+            onClick={() => searchCity()}
+            type="button"
+            innerText="Search"
+            className={styles.button}
+          />
         </Col>
       </Row>
     </Container>

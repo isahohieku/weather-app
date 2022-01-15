@@ -1,20 +1,20 @@
 import type { ShallowWrapper } from 'enzyme';
 import { shallow } from 'enzyme';
+import { screen, render, fireEvent } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import App from './App';
+import { mockCity, mockFalseCity, mockWeather } from './libs/mock-data/weather';
+import SearchBar from './molecules/search-bar';
 import { API_BASE_URL } from './constants';
-import { mockCity, mockWeather } from './libs/mock-data/weather';
-import UnitSelector from './molecules/unit-selector';
-import DetailedWeatherInfo from './organisms/detailed-weather-info';
-import MainWeatherInfo from './organisms/main-weather-info';
-import SearchBar from './organisms/search-bar';
 
-const server = setupServer(
-  rest.get(`${API_BASE_URL as string}/q=${mockCity}`, (req, res, ctx) => {
-    return res(ctx.json(mockWeather));
-  }),
+const getWeatherReportResponse = rest.get(`${API_BASE_URL}`, (req, res, ctx) =>
+  res(ctx.json(mockWeather)),
 );
+const getWeatherReportErrorResponse = rest.get(`${API_BASE_URL}`, (req, res, ctx) =>
+  res(ctx.status(404)),
+);
+const server = setupServer(getWeatherReportResponse);
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
@@ -25,28 +25,54 @@ describe('App', () => {
 
   beforeEach(() => (container = shallow(<App />)));
 
-  test('Should contain a unit selector component', () => {
-    expect(container.containsMatchingElement(<UnitSelector />)).toBeTruthy();
-  });
-
   test('Should contain a search component', () => {
     const onSearch = jest.fn();
     expect(container.find(<SearchBar onSearch={onSearch} />)).toBeTruthy();
   });
 
-  test('Should contain the main weather info component', () => {
-    expect(container.containsMatchingElement(<MainWeatherInfo />)).toBeTruthy();
+  test('Should search random coordinate when app mounts', async () => {
+    render(<App />);
+    const city = await screen.findByText(mockCity);
+    expect(city).toBeVisible();
   });
 
-  test('Should contain the detailed weather info component', () => {
-    expect(container.containsMatchingElement(<DetailedWeatherInfo />)).toBeTruthy();
+  test('Should make an API call for a searched city and be displayed', async () => {
+    const { container } = render(<App />);
+    const searchInput = container.querySelector('#search') as Element;
+    const button = screen.getByRole('button');
+
+    fireEvent.change(searchInput, { target: { value: mockCity } });
+
+    fireEvent(
+      button,
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
+
+    const city = await screen.findByText(mockCity);
+    expect(city).toBeVisible();
   });
 
-  //   test('Should make an API call for a searched city and be displayed', () =>  {
+  test('Should make an API call for a none existing city and throw error', async () => {
+    server.use(getWeatherReportErrorResponse);
+    const { container } = render(<App />);
 
-  //   });
+    const searchInput = container.querySelector('#search') as Element;
+    const button = screen.getByRole('button');
 
-  //   test('Should make an API call for a searched city and throw error', () =>  {
+    fireEvent.change(searchInput, { target: { value: mockFalseCity } });
 
-  // });
+    fireEvent(
+      button,
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
+
+    const city = await screen.findByText(/Ops/i);
+    expect(city).toBeVisible();
+  });
 });

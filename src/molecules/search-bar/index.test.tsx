@@ -1,11 +1,10 @@
 import type { ShallowWrapper } from 'enzyme';
 import { mount } from 'enzyme';
 import { shallow } from 'enzyme';
-import React from 'react';
 import Button from '../../atoms/button';
 import Input from '../../atoms/input';
 import { mockCity } from '../../libs/mock-data/weather';
-import SearchBar from './';
+import SearchBar from '.';
 
 describe('Search Bar', () => {
   let container: ShallowWrapper;
@@ -21,13 +20,13 @@ describe('Search Bar', () => {
 
   test('Should contain a search form control component', () => {
     const onChange = jest.fn();
-    expect(container.find(<Input onChange={onChange} />)).toBeTruthy();
+    expect(container.find(<Input id="search" onChange={onChange} />)).toBeTruthy();
   });
 
   test('Should call props onSubmit if the input has value', () => {
     const onSearch = jest.fn();
     const wrapper = mount(<SearchBar onSearch={onSearch} />);
-    const searchInput = wrapper.find('input').first();
+    const searchInput = wrapper.find('#search').first();
     const button = wrapper.find('button');
     searchInput.simulate('change', { target: { value: mockCity } });
 
@@ -38,7 +37,9 @@ describe('Search Bar', () => {
   test('Should not call props onSubmit if the input has no value', () => {
     const onSearch = jest.fn();
     const wrapper = mount(<SearchBar onSearch={onSearch} />);
+    const searchInput = wrapper.find('#search').first();
     const button = wrapper.find('button');
+    searchInput.simulate('change', { target: { value: '' } });
 
     button.simulate('click');
     expect(onSearch).not.toHaveBeenCalled();

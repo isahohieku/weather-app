@@ -1,30 +1,7 @@
-export interface IApiPaginateResponse {
-  itemsPerPage: number;
-  page: number;
-  pages: number;
-  items: number;
-}
+import type { WeatherResponse } from '../../../types/weather';
 
 export interface IApiResponse {
-  status: 'error' | 'success';
-  code: string;
-  message: string;
-  data: unknown;
-  meta?: IApiPaginateResponse | null;
+  cod: string | number;
 }
 
-export interface IApiSuccessResponse extends IApiResponse {
-  status: 'success';
-  meta?: IApiPaginateResponse;
-}
-
-export interface IApiErrorResponse extends IApiResponse {
-  status: 'error';
-  meta: null;
-}
-
-export interface Document {
-  _id: string;
-  createdAt: string;
-  updatedAt: string;
-}
+export interface IApiSuccessResponse extends IApiResponse, WeatherResponse {}

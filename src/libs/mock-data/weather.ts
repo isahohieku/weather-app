@@ -1,6 +1,10 @@
-export const mockWeather = {
+import type { WeatherResponse } from '../../types/weather';
+import { Conditions } from '../../types/weather';
+import { getRandomCoordinate } from '../../utils/functions';
+
+export const mockWeather: WeatherResponse = {
   coord: { lon: 7.4898, lat: 9.0574 },
-  weather: [{ id: 804, main: 'Clouds', description: 'overcast clouds', icon: '04d' }],
+  weather: [{ id: 804, main: Conditions.Clouds, description: 'overcast clouds', icon: '04d' }],
   base: 'stations',
   main: {
     temp: 298.76,
@@ -20,7 +24,15 @@ export const mockWeather = {
   timezone: 3600,
   id: 2352778,
   name: 'Abuja',
-  cod: 200,
+};
+
+export const mockErrorNotFoundCity = {
+  message: 'city not found',
+  cod: '404',
 };
 
 export const mockCity = 'Abuja';
+export const mockFalseCity = 'NeverExistingLand';
+
+export const mockLongitude = getRandomCoordinate(2);
+export const mockLatitude = getRandomCoordinate(2);
