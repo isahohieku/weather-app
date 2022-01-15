@@ -35,7 +35,12 @@ const SearchBar = ({ onSearch }: ISearchBar) => {
           <div className={styles.inputWrapper}>
             <MapPin /> <Input onChange={onChange} id="search" placeholder="Search City" />
           </div>
-          <Button onClick={() => searchCity()} innerText="Search" className={styles.button} />
+          <Button
+            onClick={() => searchCity()}
+            type="button"
+            innerText="Search"
+            className={styles.button}
+          />
         </Col>
       </Row>
     </Container>

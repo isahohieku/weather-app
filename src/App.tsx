@@ -30,7 +30,9 @@ const App = () => {
           setWeatherReport(res);
         }
       } catch {
-        setHasError(true);
+        if (_isMounted.current) {
+          setHasError(true);
+        }
       } finally {
         if (_isMounted.current) {
           setLoading(false);
@@ -52,11 +54,17 @@ const App = () => {
       setWeatherReport(null);
       setHasError(false);
       const res: WeatherResponse = await getWeatherReport(city);
-      setWeatherReport(res);
+      if (_isMounted.current) {
+        setWeatherReport(res);
+      }
     } catch {
-      setHasError(true);
+      if (_isMounted.current) {
+        setHasError(true);
+      }
     } finally {
-      setLoading(false);
+      if (_isMounted.current) {
+        setLoading(false);
+      }
     }
   };
   return (
