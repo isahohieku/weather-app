@@ -7,6 +7,7 @@ import { getWeatherReport, getWeatherReportByCoordinates } from './services/weat
 import type { WeatherResponse } from './types/weather';
 import { getRandomCoordinate } from './utils/functions';
 import ErrorView from './molecules/error-message';
+import DetailedWeatherInfo from './organisms/detailed-weather-info';
 
 const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -70,7 +71,10 @@ const App = () => {
       <Row>
         <Col className="d-flex justify-content-center align-items-center mt-5">
           {!loading && !hasError && weatherReport && (
-            <MainWeatherInfo weatherReport={weatherReport} />
+            <>
+              <MainWeatherInfo weatherReport={weatherReport} />
+              <DetailedWeatherInfo weatherReport={weatherReport} />
+            </>
           )}
           {!loading && hasError && <ErrorView search={currentSearch} />}
         </Col>

@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import { screen, render, fireEvent } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import mockAxios from 'jest-mock-axios';
 import App from './App';
 import { mockCity, mockFalseCity, mockWeather } from './libs/mock-data/weather';
 import SearchBar from './molecules/search-bar';
@@ -15,8 +14,6 @@ const getWeatherReportResponse = rest.get(`${API_BASE_URL}`, (req, res, ctx) =>
 const getWeatherReportErrorResponse = rest.get(`${API_BASE_URL}`, (req, res, ctx) =>
   res(ctx.status(404)),
 );
-// const getWeatherReportMiissingAPIKeyErrorResponse = rest.get(`${API_BASE_URL}`, (req, res, ctx) => res(ctx.status(401)));
-
 const server = setupServer(getWeatherReportResponse);
 
 beforeAll(() => server.listen());
@@ -25,10 +22,6 @@ afterAll(() => server.close());
 
 describe('App', () => {
   let container: ShallowWrapper;
-
-  afterEach(() => {
-    mockAxios.reset();
-  });
 
   beforeEach(() => (container = shallow(<App />)));
 

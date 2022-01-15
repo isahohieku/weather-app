@@ -26,7 +26,7 @@ describe('Search Bar', () => {
   test('Should call props onSubmit if the input has value', () => {
     const onSearch = jest.fn();
     const wrapper = mount(<SearchBar onSearch={onSearch} />);
-    const searchInput = wrapper.find('input').first();
+    const searchInput = wrapper.find('#search').first();
     const button = wrapper.find('button');
     searchInput.simulate('change', { target: { value: mockCity } });
 
@@ -37,7 +37,9 @@ describe('Search Bar', () => {
   test('Should not call props onSubmit if the input has no value', () => {
     const onSearch = jest.fn();
     const wrapper = mount(<SearchBar onSearch={onSearch} />);
+    const searchInput = wrapper.find('#search').first();
     const button = wrapper.find('button');
+    searchInput.simulate('change', { target: { value: '' } });
 
     button.simulate('click');
     expect(onSearch).not.toHaveBeenCalled();
