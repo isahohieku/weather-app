@@ -1,46 +1,51 @@
-# Getting Started with Create React App
+![Build](https://github.com/isahohieku/weather-app/actions/workflows/pr.yaml/badge.svg)
+![Build](https://github.com/isahohieku/weather-app/actions/workflows/merge.yaml/badge.svg)
+[![codecov](https://codecov.io/gh/isahohieku/weather-app/branch/main/graph/badge.svg?token=C9WCMBNFFC)](https://codecov.io/gh/isahohieku/weather-app)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Simple Weather App
 
-## Available Scripts
+## This is a simple weather app.
 
-In the project directory, you can run:
+[Link to deployed App](admiring-mestorf-8f350d.netlify.app/)
 
-### `yarn start`
+## Approach
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Outlined the user story so as to understand the feature requirements and how to implement them. Attached is a Word File in the root of the project repo. [Epic - Weather App](https://github.com/isahohieku/weather-app/blob/main/Epic%20-%20Weather%20App.docx)
+- Created a little mockup on Figma based on the user story. The `.fig` file can also be found in the root folder [Figma design](https://github.com/isahohieku/weather-app/blob/main/Weather%20App.fig)
+- Approched implementation of the code with TDD and Atomic design.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Expectations
 
-### `yarn test`
+- [x] Display the weather at random geographic coordinates
+- [ ] ~~A form with city and country that fetches and displays the weather in this city~~ A search input field a user can add any city/country of choice to search it's weather.
+- [x] optional: cache the fetched weather data
+- [x] Gracefully handle the case where the city could not be found (display the information to the user)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `yarn build`
+After cloning the project, run `yarn install` in the terminal to install dependencies (Assuming you're in the root directory of the project in the terminal).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Setting up environment
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Create a `.env` in the root folder of the project, copy and past content of `.envsample` file in the root folder to the `.env` file.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+If you have no API key from OpenWeather, click [OpenWeather](https://openweathermap.org/) to signup and get one.
 
-### `yarn eject`
+## Run Application
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Run `yarn start` in the terminal to start the application
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Test Application
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Run `yarn test` in the terminal to run test on the application.
+Use `yarn test:coverage` for test coverage.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Lint Project
 
-## Learn More
+Run `yarn lint` in the terminal to lint project and get report.
+Use `yarn lint:fix` to fix all fixable lint issues.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Make Project Pretty
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Run `yarn prettier:check` in the terminal to get report.
+Use `yarn prettier:fix` to fix all fixable issues.
