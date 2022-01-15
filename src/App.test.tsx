@@ -36,17 +36,6 @@ describe('App', () => {
     expect(city).toBeVisible();
   });
 
-  test('Should search random coordinate when app mounts and throw error', async () => {
-    server.use(getWeatherReportErrorResponse);
-    render(<App />);
-
-    const city = await screen.findByText(/current search/i);
-    expect(city).toBeVisible();
-  });
-
-  // test('Should throw error if API key is missing in interceptor', async () => {
-  // });
-
   test('Should make an API call for a searched city and be displayed', async () => {
     const { container } = render(<App />);
     const searchInput = container.querySelector('#search') as Element;
@@ -66,9 +55,10 @@ describe('App', () => {
     expect(city).toBeVisible();
   });
 
-  test('Should make an API call for aa unknown city and throw error', async () => {
+  test('Should make an API call for a none existing city and throw error', async () => {
     server.use(getWeatherReportErrorResponse);
     const { container } = render(<App />);
+
     const searchInput = container.querySelector('#search') as Element;
     const button = screen.getByRole('button');
 

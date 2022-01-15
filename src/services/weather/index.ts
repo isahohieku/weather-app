@@ -1,20 +1,14 @@
 import { Api } from '../../libs/api';
 import type { WeatherResponse } from '../../types/weather';
+import { getRandomCoordinate } from '../../utils/functions';
+
+const long = getRandomCoordinate(2);
+const lat = getRandomCoordinate(2);
 
 export const WEATHER_SEARCH_BASE_URL_BY_CITY = (city: string): string => `?q=${city}`;
-export const WEATHER_SEARCH_BASE_URL_BY_COORDINATES = (long: number, lat: number): string =>
-  `?lat=${lat}&lon=${long}`;
+export const WEATHER_SEARCH_BASE_URL_BY_COORDINATES = `?lat=${lat}&lon=${long}`;
 
-export const getWeatherReport = async (city: string) => {
-  const res: WeatherResponse = (await Api.get(
-    WEATHER_SEARCH_BASE_URL_BY_CITY(city),
-  )) as unknown as WeatherResponse;
-  return res;
-};
-
-export const getWeatherReportByCoordinates = async (long: number, lat: number) => {
-  const res: WeatherResponse = (await Api.get(
-    WEATHER_SEARCH_BASE_URL_BY_COORDINATES(long, lat),
-  )) as unknown as WeatherResponse;
-  return res;
-};
+export const getWeatherReport = (city?: string) =>
+  Api.get(
+    city ? WEATHER_SEARCH_BASE_URL_BY_CITY(city) : WEATHER_SEARCH_BASE_URL_BY_COORDINATES,
+  ) as unknown as WeatherResponse;
