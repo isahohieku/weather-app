@@ -1,35 +1,65 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import UnitSelector from './molecules/unit-selector';
-import DetailedWeatherInfo from './organisms/detailed-weather-info';
+import Loader from './atoms/loader';
 import MainWeatherInfo from './organisms/main-weather-info';
-import SearchBar from './organisms/search-bar';
-import { getWeatherReport } from './services/weather';
+import SearchBar from './molecules/search-bar';
+import { getWeatherReport, getWeatherReportByCoordinates } from './services/weather';
 import type { WeatherResponse } from './types/weather';
+import { getRandomCoordinate } from './utils/functions';
+import ErrorView from './molecules/error-message';
 
 const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [hasError, setHasError] = useState<boolean>(false);
+  const [currentSearch, setCurrentSearch] = useState<string | null>(null);
   const [weatherReport, setWeatherReport] = useState<WeatherResponse | null>(null);
 
+  const _isMounted = useRef(true);
+
+  useEffect(() => {
+    const getRandomWeather = async () => {
+      const long = getRandomCoordinate(2);
+      const lat = getRandomCoordinate(2);
+      try {
+        setLoading(true);
+        setHasError(false);
+        setWeatherReport(null);
+        if (_isMounted.current) {
+          const res = await getWeatherReportByCoordinates(long, lat);
+          setWeatherReport(res);
+        }
+      } catch {
+        setHasError(true);
+      } finally {
+        if (_isMounted.current) {
+          setLoading(false);
+        }
+      }
+    };
+
+    getRandomWeather();
+
+    return () => {
+      _isMounted.current = false;
+    };
+  }, []);
+
   const onSearch = async (city: string) => {
+    setCurrentSearch(city);
     try {
       setLoading(true);
-      const result: WeatherResponse = await getWeatherReport(city);
-      setWeatherReport(result);
-    } catch (e) {
-      console.log('Error', e);
+      setWeatherReport(null);
+      setHasError(false);
+      const res: WeatherResponse = await getWeatherReport(city);
+      setWeatherReport(res);
+    } catch {
+      setHasError(true);
     } finally {
       setLoading(false);
     }
   };
   return (
     <Container>
-      {/* Toggle Row */}
-      <Row>
-        <Col className="d-flex justify-content-end">
-          <UnitSelector />
-        </Col>
-      </Row>
       {/* Search bar */}
       <Row>
         <Col className="d-flex justify-content-center">
@@ -39,13 +69,13 @@ const App = () => {
       {/* Search bar */}
       <Row>
         <Col className="d-flex justify-content-center align-items-center">
-          <MainWeatherInfo />
-          <DetailedWeatherInfo />
+          {!loading && !hasError && weatherReport && (
+            <MainWeatherInfo weatherReport={weatherReport} />
+          )}
+          {!loading && hasError && <ErrorView search={currentSearch} />}
         </Col>
       </Row>
-      {weatherReport && <p>{`${weatherReport}`}</p>}
-      {loading && <p>Loading</p>}
-      {!loading && weatherReport && <p>Loading Complete</p>}
+      {loading && <Loader />}
     </Container>
   );
 };

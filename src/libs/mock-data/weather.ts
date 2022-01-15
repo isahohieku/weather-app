@@ -1,4 +1,5 @@
 import type { WeatherResponse } from '../../types/weather';
+import { getRandomCoordinate } from '../../utils/functions';
 
 export const mockWeather: WeatherResponse = {
   coord: { lon: 7.4898, lat: 9.0574 },
@@ -31,3 +32,6 @@ export const mockErrorNotFoundCity = {
 
 export const mockCity = 'Abuja';
 export const mockFalseCity = 'NeverExistingLand';
+
+export const mockLongitude = getRandomCoordinate(2);
+export const mockLatitude = getRandomCoordinate(2);

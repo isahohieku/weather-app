@@ -1,7 +1,7 @@
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import _axios from 'axios';
 import { API_BASE_URL, API_KEY } from '../../constants';
-import type { IApiErrorResponse, IApiSuccessResponse } from './types';
+import type { IApiSuccessResponse } from './types';
 
 const axios = _axios.create({
   baseURL: `${API_BASE_URL}/`,
@@ -31,28 +31,10 @@ const handleApiSuccess = (res: AxiosResponse) => {
 const handleApiError = (err: AxiosError) => {
   let errorMessagge = '';
 
-  // request was manually cancelled in a `useEffect` hook
-  if (_axios.isCancel(err)) {
-    return; // fail silently
-  }
-
   if (err.response) {
-    const apiError: IApiErrorResponse = err.response.data;
-    // client received an error response (5xx, 4xx)
-    console.error(
-      `API returned code ${err.code}:${apiError.cod}, ` + `body was: ${apiError.message}`,
-      'data:',
-    );
-    errorMessagge = apiError.message;
-  } else {
-    // anything else
-    console.error('Well, that was unexpected:', err.message);
+    errorMessagge = err.response.statusText;
   }
-
-  return (
-    errorMessagge ||
-    "We couldn't complete your request. Please try again or check your internet connection."
-  );
+  throw errorMessagge;
 };
 
 export const Api = {

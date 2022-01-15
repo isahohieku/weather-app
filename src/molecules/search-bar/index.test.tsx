@@ -1,11 +1,10 @@
 import type { ShallowWrapper } from 'enzyme';
 import { mount } from 'enzyme';
 import { shallow } from 'enzyme';
-import React from 'react';
 import Button from '../../atoms/button';
 import Input from '../../atoms/input';
 import { mockCity } from '../../libs/mock-data/weather';
-import SearchBar from './';
+import SearchBar from '.';
 
 describe('Search Bar', () => {
   let container: ShallowWrapper;

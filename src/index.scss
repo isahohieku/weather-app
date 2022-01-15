@@ -5,11 +5,30 @@
   --black: #000;
   --black-pearl: #222831;
   --cloud-burst: #333c49;
-  --bs-blue: #39aced;
-  --bs-primary: #39aced;
+  --sky-blue: #39aced;
 }
 
 body {
   font-family: Montserrat, sans-serif;
-  background-color: var(--black-pearl);
+  background-color: var(--cloud-burst);
+}
+
+.btn-primary {
+  background-color: var(--sky-blue);
+  border: 0;
+
+  &:focus {
+    background-color: var(--sky-blue);
+    box-shadow: none;
+  }
+
+  &:hover,
+  &:active {
+    background-color: var(--sky-blue);
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    box-shadow: none;
+  }
 }

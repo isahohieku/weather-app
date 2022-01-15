@@ -5,7 +5,3 @@ export interface IApiResponse {
 }
 
 export interface IApiSuccessResponse extends IApiResponse, WeatherResponse {}
-
-export interface IApiErrorResponse extends IApiResponse {
-  message: string;
-}
