@@ -13,7 +13,7 @@ import { queryClient } from '../../store/react-query';
 const cacheTime = 10 * 60 * 1000; // 10 min
 
 const WeatherPage = () => {
-  const [currentSearch, setCurrentSearch] = useState<string>('');
+  const [currentSearch, setCurrentSearch] = useState<string | null>(null);
   const { isLoading, isFetching, data, error, refetch } = useQuery<
     WeatherResponse,
     WeatherErrorResponse
