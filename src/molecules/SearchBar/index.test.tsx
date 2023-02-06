@@ -1,8 +1,8 @@
 import type { ShallowWrapper } from 'enzyme';
 import { mount } from 'enzyme';
 import { shallow } from 'enzyme';
-import Button from '../../atoms/button';
-import Input from '../../atoms/input';
+import Button from '../../atoms/Button';
+import Input from '../../atoms/Input';
 import { mockCity } from '../../libs/mock-data/weather';
 import SearchBar from '.';
 

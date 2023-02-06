@@ -1,9 +1,10 @@
+import type { FormEvent } from 'react';
 import { useState } from 'react';
 import type { FormControlProps } from 'react-bootstrap';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row, Form } from 'react-bootstrap';
 import { MapPin } from 'react-feather';
-import Button from '../../atoms/button';
-import Input from '../../atoms/input';
+import Button from '../../atoms/Button';
+import Input from '../../atoms/Input';
 import styles from './styles.module.scss';
 
 interface InputEvent extends FormControlProps {
@@ -23,7 +24,8 @@ const SearchBar = ({ onSearch }: ISearchBar) => {
     setSearch(value);
   };
 
-  const searchCity = (): void => {
+  const searchCity = (e: FormEvent): void => {
+    e.preventDefault();
     if (!search) return;
     onSearch(search);
   };
@@ -31,16 +33,13 @@ const SearchBar = ({ onSearch }: ISearchBar) => {
   return (
     <Container className="mt-5">
       <Row className="d-flex justify-content-center">
-        <Col md={6} className="d-flex">
-          <div className={styles.inputWrapper}>
-            <MapPin /> <Input onChange={onChange} id="search" placeholder="Search City" />
-          </div>
-          <Button
-            onClick={() => searchCity()}
-            type="button"
-            innerText="Search"
-            className={styles.button}
-          />
+        <Col md={6}>
+          <Form className="d-flex" onSubmit={searchCity}>
+            <div className={styles.inputWrapper}>
+              <MapPin /> <Input onChange={onChange} id="search" placeholder="Search City" />
+            </div>
+            <Button innerText="Search" className={styles.button} />
+          </Form>
         </Col>
       </Row>
     </Container>

@@ -1,31 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import Loader from '../../atoms/loader';
-import MainWeatherInfo from '../../organisms/main-weather-info';
-import SearchBar from '../../molecules/search-bar';
-import { getWeatherReport } from '../../services/weather';
-import ErrorView from '../../molecules/error-message';
-import DetailedWeatherInfo from '../../organisms/detailed-weather-info';
-import { QueryClientProvider, useQuery } from 'react-query';
-import type { WeatherErrorResponse, WeatherResponse } from '../../types/weather';
+import Loader from '../../atoms/Loader';
+import MainWeatherInfo from '../../organisms/MainWeatherInfo';
+import SearchBar from '../../molecules/SearchBar';
+import ErrorView from '../../molecules/ErrorMessage';
+import DetailedWeatherInfo from '../../organisms/DetailedWeatherInfo';
+import { QueryClientProvider } from 'react-query';
+import type { WeatherResponse } from '../../types';
 import { queryClient } from '../../store/react-query';
-
-const cacheTime = 10 * 60 * 1000; // 10 min
+import { useSearchWeather } from '../../hooks';
 
 const WeatherPage = () => {
   const [currentSearch, setCurrentSearch] = useState<string | null>(null);
-  const { isLoading, isFetching, data, error, refetch } = useQuery<
-    WeatherResponse,
-    WeatherErrorResponse
-  >('weatherReportByCity', () => getWeatherReport(currentSearch), {
-    enabled: false,
-    cacheTime,
-    retry: 0,
-  });
-
-  useEffect(() => {
-    refetch();
-  }, [currentSearch]);
+  const { isLoading, isFetching, data, error } = useSearchWeather(currentSearch);
 
   const onSearch = (city: string) => {
     setCurrentSearch(city);

@@ -8,7 +8,7 @@ interface ButtonProps extends HTMLElement {
   type: button;
 }
 
-const Button = ({ onClick, className, innerText, type }: Partial<ButtonProps>) => {
+const Button = ({ onClick, className, innerText, type = 'submit' }: Partial<ButtonProps>) => {
   return (
     <BSButton onClick={onClick} className={className} type={type}>
       {innerText}
