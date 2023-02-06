@@ -8,7 +8,10 @@ const ErrorView = ({ search }: Props) => {
   return (
     <div className={styles.wrapper}>
       <Frown size={50} />
-      <p>Ops! Weather report for {search ?? 'current search'} not found</p>
+      <p>
+        Ops! Weather report for {search ?? 'current search'} not found, Please search another
+        location!
+      </p>
     </div>
   );
 };
