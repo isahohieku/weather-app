@@ -1,4 +1,4 @@
-import WeatherPage from './pages/Weathers';
+import WeatherPage from './pages/Weather';
 import { QueryClientProvider } from 'react-query';
 import { queryClient } from './store/react-query';
 

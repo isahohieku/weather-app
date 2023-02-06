@@ -1,7 +1,7 @@
 import type { ShallowWrapper } from 'enzyme';
 import { shallow } from 'enzyme';
-import Button from '../../atoms/Button';
-import Input from '../../atoms/Input';
+import Button from '../../atoms/button';
+import Input from '../../atoms/input';
 import { mockCity } from '../../libs/mock-data/weather';
 import SearchBar from '.';
 import { fireEvent, getByText, render, screen } from '@testing-library/react';

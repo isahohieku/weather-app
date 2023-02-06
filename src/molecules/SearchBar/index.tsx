@@ -3,8 +3,8 @@ import { useState } from 'react';
 import type { FormControlProps } from 'react-bootstrap';
 import { Col, Container, Row, Form } from 'react-bootstrap';
 import { MapPin } from 'react-feather';
-import Button from '../../atoms/Button';
-import Input from '../../atoms/Input';
+import Button from '../../atoms/button';
+import Input from '../../atoms/input';
 import styles from './styles.module.scss';
 
 interface InputEvent extends FormControlProps {
