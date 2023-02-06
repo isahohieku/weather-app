@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import Loader from '../../atoms/loader';
+import Loader from '../../atoms/Loader';
 import MainWeatherInfo from '../../organisms/MainWeatherInfo';
 import SearchBar from '../../molecules/SearchBar';
 import ErrorView from '../../molecules/ErrorMessage';
