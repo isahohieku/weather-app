@@ -1,10 +1,10 @@
 import type { ShallowWrapper } from 'enzyme';
-import { mount } from 'enzyme';
 import { shallow } from 'enzyme';
-import Button from '../../atoms/button';
-import Input from '../../atoms/input';
+import Button from '../../atoms/Button';
+import Input from '../../atoms/Input';
 import { mockCity } from '../../libs/mock-data/weather';
 import SearchBar from '.';
+import { fireEvent, getByText, render, screen } from '@testing-library/react';
 
 describe('Search Bar', () => {
   let container: ShallowWrapper;
@@ -25,23 +25,40 @@ describe('Search Bar', () => {
 
   test('Should call props onSubmit if the input has value', () => {
     const onSearch = jest.fn();
-    const wrapper = mount(<SearchBar onSearch={onSearch} />);
-    const searchInput = wrapper.find('#search').first();
-    const button = wrapper.find('button');
-    searchInput.simulate('change', { target: { value: mockCity } });
+    render(<SearchBar onSearch={onSearch} />);
 
-    button.simulate('click');
+    const input = document.querySelector('#search') as HTMLInputElement;
+    fireEvent.change(input, { target: { value: mockCity } });
+
+    const button = screen.getByRole('button');
+
+    fireEvent(
+      getByText(button, 'Search'),
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
+
     expect(onSearch).toHaveBeenCalledWith(mockCity);
   });
 
   test('Should not call props onSubmit if the input has no value', () => {
     const onSearch = jest.fn();
-    const wrapper = mount(<SearchBar onSearch={onSearch} />);
-    const searchInput = wrapper.find('#search').first();
-    const button = wrapper.find('button');
-    searchInput.simulate('change', { target: { value: '' } });
+    render(<SearchBar onSearch={onSearch} />);
 
-    button.simulate('click');
+    const input = document.querySelector('#search') as HTMLInputElement;
+    fireEvent.change(input, { target: { value: '' } });
+
+    const button = screen.getByRole('button');
+
+    fireEvent(
+      getByText(button, 'Search'),
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
     expect(onSearch).not.toHaveBeenCalled();
   });
 });

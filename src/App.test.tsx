@@ -5,7 +5,7 @@ import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import App from './App';
 import { mockCity, mockFalseCity, mockWeather } from './libs/mock-data/weather';
-import SearchBar from './molecules/search-bar';
+import SearchBar from './molecules/SearchBar';
 import { API_BASE_URL } from './constants';
 
 const getWeatherReportResponse = rest.get(`${API_BASE_URL}`, (req, res, ctx) =>

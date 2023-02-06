@@ -1,9 +1,6 @@
 {
-    "*.{ts,tsx}": [
-      "yarn lint:fix",
-      "git add"
-    ],
-    "*.{ts,tsx,json,scss,md}": [
-      "yarn prettier:fix"
-    ]
+  "*.{ts,tsx}": [
+    "yarn prettier:fix",
+    "yarn lint:fix"
+  ]
 }
