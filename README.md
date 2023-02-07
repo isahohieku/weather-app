@@ -1,5 +1,5 @@
 ![Build](https://github.com/isahohieku/weather-app/actions/workflows/pr.yaml/badge.svg)
-![Build](https://github.com/isahohieku/weather-app/actions/workflows/merge.yaml/badge.svg)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/492d27f3-b1f9-4ef0-a4b4-6c242dc95a5e/deploy-status)](https://app.netlify.com/sites/admiring-mestorf-8f350d/deploys)
 [![codecov](https://codecov.io/gh/isahohieku/weather-app/branch/main/graph/badge.svg?token=C9WCMBNFFC)](https://codecov.io/gh/isahohieku/weather-app)
 
 # Simple Weather App
