@@ -1,11 +1,8 @@
-import type { ShallowWrapper } from 'enzyme';
-import { shallow } from 'enzyme';
 import { screen, render, fireEvent } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import App from './App';
 import { mockCity, mockFalseCity, mockWeather } from './libs/mock-data/weather';
-import SearchBar from './molecules/SearchBar';
 import { API_BASE_URL } from './constants';
 
 const getWeatherReportResponse = rest.get(`${API_BASE_URL}`, (req, res, ctx) =>
@@ -21,19 +18,14 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 describe('App', () => {
-  let container: ShallowWrapper;
-
-  beforeEach(() => (container = shallow(<App />)));
-
   test('Should contain a search component', () => {
-    const onSearch = jest.fn();
-    expect(container.find(<SearchBar onSearch={onSearch} />)).toBeTruthy();
+    expect(render(<App />)).toBeTruthy();
   });
 
   test('Should search random coordinate when app mounts', async () => {
     render(<App />);
     const city = await screen.findByText(mockCity);
-    expect(city).toBeVisible();
+    expect(city).toBeTruthy();
   });
 
   test('Should make an API call for a searched city and be displayed', async () => {

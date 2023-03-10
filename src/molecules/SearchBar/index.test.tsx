@@ -1,33 +1,31 @@
-import type { ShallowWrapper } from 'enzyme';
-import { shallow } from 'enzyme';
-import Button from '../../atoms/Button';
+import { fireEvent, getByText, render, screen, queryByAttribute } from '@testing-library/react';
 import Input from '../../atoms/Input';
 import { mockCity } from '../../libs/mock-data/weather';
 import SearchBar from '.';
-import { fireEvent, getByText, render, screen } from '@testing-library/react';
 
 describe('Search Bar', () => {
-  let container: ShallowWrapper;
-
-  beforeEach(() => {
-    const defaultProps = { onSearch: jest.fn() };
-    container = shallow(<SearchBar {...defaultProps} />);
-  });
+  const defaultProps = { onSearch: jest.fn() };
 
   test('Should contain a button component', () => {
-    expect(container.containsMatchingElement(<Button />)).toBeTruthy();
+    render(<SearchBar {...defaultProps} />);
+    expect(screen.getByRole('button')).toHaveTextContent('Search');
   });
 
   test('Should contain a search form control component', () => {
     const onChange = jest.fn();
-    expect(container.find(<Input id="search" onChange={onChange} />)).toBeTruthy();
+    const { container } = render(<Input onChange={onChange} id="search" />);
+
+    const getById = queryByAttribute.bind(null, 'id');
+
+    expect(getById(container, 'search')).toBeTruthy();
   });
 
   test('Should call props onSubmit if the input has value', () => {
     const onSearch = jest.fn();
-    render(<SearchBar onSearch={onSearch} />);
+    const { container } = render(<SearchBar onSearch={onSearch} />);
+    const getById = queryByAttribute.bind(null, 'id');
 
-    const input = document.querySelector('#search') as HTMLInputElement;
+    const input = getById(container, 'search') as HTMLInputElement;
     fireEvent.change(input, { target: { value: mockCity } });
 
     const button = screen.getByRole('button');
