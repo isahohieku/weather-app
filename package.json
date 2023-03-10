@@ -6,7 +6,7 @@
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test:coverage": "yarn test --coverage --watchAll",
+    "test:coverage": "yarn test --coverage",
     "lint": "eslint ./src --ext=.tsx,.ts",
     "lint:fix": "yarn run lint --fix",
     "prettier": "prettier \"./**/*.{ts,tsx,md}\"",
