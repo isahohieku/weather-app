@@ -17,8 +17,10 @@ describe('MainWeatherInfo', () => {
       ...baseWeatherReport,
       weather: [{ main: 'UnknownCondition' as any }],
     };
-    render(<MainWeatherInfo weatherReport={weatherReport} convertTemp={mockConvertTemp} unit="C" />);
-    // Testing the fallback Sun icon isn't straight-forward via query by role without specific data-testids, 
+    render(
+      <MainWeatherInfo weatherReport={weatherReport} convertTemp={mockConvertTemp} unit="C" />,
+    );
+    // Testing the fallback Sun icon isn't straight-forward via query by role without specific data-testids,
     // but the branch is evaluated, which is what coverage checks.
     expect(screen.getByText('UnknownCondition')).toBeInTheDocument();
   });
@@ -29,7 +31,9 @@ describe('MainWeatherInfo', () => {
       name: '',
       sys: { country: '' },
     };
-    render(<MainWeatherInfo weatherReport={weatherReport} convertTemp={mockConvertTemp} unit="C" />);
+    render(
+      <MainWeatherInfo weatherReport={weatherReport} convertTemp={mockConvertTemp} unit="C" />,
+    );
     // It should render "Unknown, ??" inside the location p tag
     expect(screen.getByText(/Unknown, \?\?/)).toBeInTheDocument();
   });

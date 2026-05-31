@@ -15,7 +15,7 @@ const server = setupServer(getWeatherReportResponse);
 
 Object.defineProperty(global.navigator, 'geolocation', {
   value: {
-    getCurrentPosition: (success: any) => 
+    getCurrentPosition: (success: any) =>
       success({
         coords: {
           latitude: 51.1,
@@ -63,10 +63,10 @@ describe('App', () => {
   test('Should toggle temperature unit', async () => {
     render(<App />);
     const toggleBtn = screen.getByRole('button', { name: /toggle temperature unit/i });
-    
+
     // Default is C, click toggles to F
     fireEvent.click(toggleBtn);
-    
+
     // Search for city to render weather report and hit Fahrenheit conversion
     const searchInput = screen.getByPlaceholderText(/Search City/i);
     const searchBtn = screen.getByRole('button', { name: /search/i });

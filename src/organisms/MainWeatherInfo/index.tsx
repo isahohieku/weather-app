@@ -25,13 +25,15 @@ const MainWeatherInfo = ({ weatherReport, convertTemp, unit }: Props) => {
         <h4 className={styles.day}>{format(new Date(), 'eeee')}</h4>
         <p className={styles.date}>{format(new Date(), 'dd MMM yyyy')}</p>
         <p className={styles.location}>
-          <MapPin size={16} /> {weatherReport.name || 'Unknown'}, {weatherReport.sys.country || '??'}
+          <MapPin size={16} /> {weatherReport.name || 'Unknown'},{' '}
+          {weatherReport.sys.country || '??'}
         </p>
       </div>
       <div className={styles.body}>
         <WeatherIcon size={70} strokeWidth={1.5} />
         <h1 className={styles.temperature}>
-          {convertTemp(weatherReport.main.temp)}<span className={styles.degree}>°{unit}</span>
+          {convertTemp(weatherReport.main.temp)}
+          <span className={styles.degree}>°{unit}</span>
         </h1>
         <p className={styles.condition}>{weatherReport.weather[0].main}</p>
       </div>

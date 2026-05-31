@@ -24,12 +24,14 @@ describe('useGeolocation', () => {
     });
 
     const { result } = renderHook(() => useGeolocation());
-    
+
     act(() => {
       result.current.getLocation();
     });
 
-    expect(result.current.error).toBe('Location permission denied. Please allow location access or search for your city.');
+    expect(result.current.error).toBe(
+      'Location permission denied. Please allow location access or search for your city.',
+    );
     expect(result.current.isLocating).toBe(false);
   });
 
@@ -39,12 +41,14 @@ describe('useGeolocation', () => {
     });
 
     const { result } = renderHook(() => useGeolocation());
-    
+
     act(() => {
       result.current.getLocation();
     });
 
-    expect(result.current.error).toBe('Location information is unavailable. Please allow location access or search for your city.');
+    expect(result.current.error).toBe(
+      'Location information is unavailable. Please allow location access or search for your city.',
+    );
   });
 
   it('handles timeout error', () => {
@@ -53,12 +57,14 @@ describe('useGeolocation', () => {
     });
 
     const { result } = renderHook(() => useGeolocation());
-    
+
     act(() => {
       result.current.getLocation();
     });
 
-    expect(result.current.error).toBe('Location request timed out. Please allow location access or search for your city.');
+    expect(result.current.error).toBe(
+      'Location request timed out. Please allow location access or search for your city.',
+    );
   });
 
   it('handles unknown error', () => {
@@ -67,7 +73,7 @@ describe('useGeolocation', () => {
     });
 
     const { result } = renderHook(() => useGeolocation());
-    
+
     act(() => {
       result.current.getLocation();
     });
@@ -84,7 +90,7 @@ describe('useGeolocation', () => {
     });
 
     const { result } = renderHook(() => useGeolocation());
-    
+
     act(() => {
       result.current.getLocation();
     });
