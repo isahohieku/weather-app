@@ -1,4 +1,4 @@
-import styles from './styles.module.scss';
+import styles from './styles.module.css';
 const Loader = () => (
   <div className={styles.loaderWrapper}>
     <div className={styles.loaderRing}>

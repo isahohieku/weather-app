@@ -1,35 +1,41 @@
-import { Card } from 'react-bootstrap';
 import { format } from 'date-fns';
 import type { Icon } from 'react-feather';
 import { Cloud, CloudRain, CloudSnow, MapPin, Sun } from 'react-feather';
 import type { WeatherResponse } from '../../types/weather';
-import styles from './styles.module.scss';
+import styles from './styles.module.css';
 
 interface Props {
   weatherReport: WeatherResponse;
+  convertTemp: (temp: number) => number;
+  unit: 'C' | 'F';
 }
 
-const Icons = {
+const Icons: Record<string, Icon> = {
   Clouds: Cloud,
   Rain: CloudRain,
   Clear: Sun,
   Snow: CloudSnow,
 };
 
-const MainWeatherInfo = ({ weatherReport }: Props) => {
-  const Icon: Icon = Icons[weatherReport.weather[0].main];
+const MainWeatherInfo = ({ weatherReport, convertTemp, unit }: Props) => {
+  const WeatherIcon: Icon = Icons[weatherReport.weather[0].main] || Sun;
   return (
-    <Card className={styles.wrapper}>
-      <h4>{format(new Date(), 'eeee')}</h4>
-      <p className="mb-0">{format(new Date(), 'dd MMM yyyy')}</p>
-      <p className="mb-0">
-        <MapPin size={18} /> <span>{weatherReport.name || 'Unknown'}</span>,{' '}
-        {weatherReport.sys.country || 'Unknown Country'}
-      </p>
-      <Icon size={80} className="mt-auto" />
-      <h1 className={styles.temperature}>{Math.round(weatherReport.main.temp)}&deg;C</h1>
-      <p className="mb-0">{weatherReport.weather[0].main}</p>
-    </Card>
+    <div className={styles.wrapper}>
+      <div className={styles.header}>
+        <h4 className={styles.day}>{format(new Date(), 'eeee')}</h4>
+        <p className={styles.date}>{format(new Date(), 'dd MMM yyyy')}</p>
+        <p className={styles.location}>
+          <MapPin size={16} /> {weatherReport.name || 'Unknown'}, {weatherReport.sys.country || '??'}
+        </p>
+      </div>
+      <div className={styles.body}>
+        <WeatherIcon size={70} strokeWidth={1.5} />
+        <h1 className={styles.temperature}>
+          {convertTemp(weatherReport.main.temp)}<span className={styles.degree}>°{unit}</span>
+        </h1>
+        <p className={styles.condition}>{weatherReport.weather[0].main}</p>
+      </div>
+    </div>
   );
 };
 

@@ -1,48 +1,91 @@
-import { useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+
 import Loader from '../../atoms/Loader';
 import MainWeatherInfo from '../../organisms/MainWeatherInfo';
 import SearchBar from '../../molecules/SearchBar';
 import ErrorView from '../../molecules/ErrorMessage';
 import DetailedWeatherInfo from '../../organisms/DetailedWeatherInfo';
 import type { WeatherResponse } from '../../types';
-import { useSearchWeather } from '../../hooks';
+import { useSearchWeather, useGeolocation } from '../../hooks';
+import styles from './styles.module.css';
 
 const WeatherPage = () => {
   const [currentSearch, setCurrentSearch] = useState<string | null>(null);
-  const { isLoading, isFetching, data, error } = useSearchWeather(currentSearch);
+  const [unit, setUnit] = useState<'C' | 'F'>('C');
+
+  const { coords, isLocating, error: geoError, getLocation } = useGeolocation();
+  const { isLoading, isFetching, data, error } = useSearchWeather(currentSearch, coords);
+
+  // Auto-detect location on first load
+  useEffect(() => {
+    getLocation();
+  }, [getLocation]);
 
   const onSearch = (city: string) => {
     setCurrentSearch(city);
   };
 
+  const onLocate = () => {
+    setCurrentSearch(null); // Clear city search so coords take priority
+    getLocation();
+  };
+
+  const toggleUnit = () => {
+    setUnit((prev) => (prev === 'C' ? 'F' : 'C'));
+  };
+
+  const convertTemp = (tempCelsius: number): number => {
+    if (unit === 'F') {
+      return Math.round((tempCelsius * 9) / 5 + 32);
+    }
+    return Math.round(tempCelsius);
+  };
+
   return (
-    <Container>
-      <Row>
-        <Col>
-          <h3 className="text-white mt-5">Simple Weather App</h3>
-        </Col>
-      </Row>
+    <div className={styles.page}>
+      {/* Unit Toggle */}
+      <div className={styles.toggleWrapper}>
+        <span className={`${styles.toggleLabel} ${unit === 'C' ? styles.activeLabel : ''}`}>°C</span>
+        <button
+          className={`${styles.toggleSwitch} ${unit === 'F' ? styles.toggleSwitchActive : ''}`}
+          onClick={toggleUnit}
+          aria-label="Toggle temperature unit"
+          type="button"
+        >
+          <span className={styles.toggleKnob} />
+        </button>
+        <span className={`${styles.toggleLabel} ${unit === 'F' ? styles.activeLabel : ''}`}>°F</span>
+      </div>
+
       {/* Search bar */}
-      <Row>
-        <Col className="d-flex justify-content-center">
-          <SearchBar onSearch={onSearch} />
-        </Col>
-      </Row>
-      {/* Search bar */}
-      <Row>
-        <Col className="d-flex justify-content-center align-items-center mt-5">
-          {!isLoading && !isFetching && !error && data && (
-            <>
-              <MainWeatherInfo weatherReport={data as WeatherResponse} />
-              <DetailedWeatherInfo weatherReport={data as WeatherResponse} />
-            </>
-          )}
-          {!isLoading && !isFetching && error && <ErrorView search={currentSearch} />}
-        </Col>
-      </Row>
-      {(isLoading || isFetching) && <Loader />}
-    </Container>
+      <div className={styles.searchSection}>
+        <SearchBar onSearch={onSearch} onLocate={onLocate} isLocating={isLocating} />
+      </div>
+
+      {/* Geolocation Error */}
+      {geoError && (
+        <div className={styles.geoError}>
+          <span>{geoError}</span>
+        </div>
+      )}
+
+      {/* Main Content */}
+      <div className={styles.contentSection}>
+        {!isLoading && !isFetching && !error && data && (
+          <div className={styles.weatherCard}>
+            <MainWeatherInfo weatherReport={data as WeatherResponse} convertTemp={convertTemp} unit={unit} />
+            <DetailedWeatherInfo weatherReport={data as WeatherResponse} convertTemp={convertTemp} unit={unit} />
+          </div>
+        )}
+        {!isLoading && !isFetching && error && <ErrorView search={currentSearch} />}
+      </div>
+
+      {(isLoading || isFetching) && (
+        <div className={styles.loaderSection}>
+          <Loader />
+        </div>
+      )}
+    </div>
   );
 };
 

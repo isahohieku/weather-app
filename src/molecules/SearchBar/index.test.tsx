@@ -4,7 +4,7 @@ import { mockCity } from '../../libs/mock-data/weather';
 import SearchBar from '.';
 
 describe('Search Bar', () => {
-  const defaultProps = { onSearch: jest.fn() };
+  const defaultProps = { onSearch: vi.fn() };
 
   test('Should contain a button component', () => {
     render(<SearchBar {...defaultProps} />);
@@ -12,7 +12,7 @@ describe('Search Bar', () => {
   });
 
   test('Should contain a search form control component', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const { container } = render(<Input onChange={onChange} id="search" />);
 
     const getById = queryByAttribute.bind(null, 'id');
@@ -21,7 +21,7 @@ describe('Search Bar', () => {
   });
 
   test('Should call props onSubmit if the input has value', () => {
-    const onSearch = jest.fn();
+    const onSearch = vi.fn();
     const { container } = render(<SearchBar onSearch={onSearch} />);
     const getById = queryByAttribute.bind(null, 'id');
 
@@ -42,7 +42,7 @@ describe('Search Bar', () => {
   });
 
   test('Should not call props onSubmit if the input has no value', () => {
-    const onSearch = jest.fn();
+    const onSearch = vi.fn();
     render(<SearchBar onSearch={onSearch} />);
 
     const input = document.querySelector('#search') as HTMLInputElement;

@@ -1,27 +1,19 @@
 import type { FormEvent } from 'react';
 import { useState } from 'react';
-import type { FormControlProps } from 'react-bootstrap';
-import { Col, Container, Row, Form } from 'react-bootstrap';
-import { MapPin } from 'react-feather';
-import Button from '../../atoms/Button';
-import Input from '../../atoms/Input';
-import styles from './styles.module.scss';
-
-interface InputEvent extends FormControlProps {
-  target: {
-    value: string;
-  };
-}
+import { MapPin, Navigation } from 'react-feather';
+import styles from './styles.module.css';
 
 interface ISearchBar {
   onSearch(search: string): void;
+  onLocate(): void;
+  isLocating: boolean;
 }
 
-const SearchBar = ({ onSearch }: ISearchBar) => {
+const SearchBar = ({ onSearch, onLocate, isLocating }: ISearchBar) => {
   const [search, setSearch] = useState<string>('');
 
-  const onChange = ({ target: { value } }: InputEvent) => {
-    setSearch(value);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
   };
 
   const searchCity = (e: FormEvent): void => {
@@ -31,18 +23,32 @@ const SearchBar = ({ onSearch }: ISearchBar) => {
   };
 
   return (
-    <Container className="mt-5">
-      <Row className="d-flex justify-content-center">
-        <Col md={6}>
-          <Form className="d-flex" onSubmit={searchCity}>
-            <div className={styles.inputWrapper}>
-              <MapPin /> <Input onChange={onChange} id="search" placeholder="Search City" />
-            </div>
-            <Button innerText="Search" className={styles.button} />
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+    <form className={styles.form} onSubmit={searchCity}>
+      <div className={styles.inputWrapper}>
+        <MapPin className={styles.icon} size={20} />
+        <input
+          onChange={onChange}
+          value={search}
+          id="search"
+          placeholder="Search City"
+          className={styles.input}
+          autoComplete="off"
+        />
+      </div>
+      <button type="submit" className={styles.button}>
+        Search
+      </button>
+      {/* <button
+        type="button"
+        className={`${styles.locationButton} ${isLocating ? styles.locationButtonLocating : ''}`}
+        onClick={onLocate}
+        disabled={isLocating}
+        aria-label="Use my location"
+        title="Use my location"
+      >
+        <Navigation size={20} />
+      </button> */}
+    </form>
   );
 };
 

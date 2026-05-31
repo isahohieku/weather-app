@@ -1,18 +1,18 @@
-import { Button as BSButton } from 'react-bootstrap';
+import { Button as ShadcnButton } from '@/components/ui/button';
 
 type button = 'submit' | 'button';
 
-interface ButtonProps extends HTMLElement {
-  onClick(): void;
-  text: string;
-  type: button;
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  onClick?(): void;
+  innerText: string;
+  type?: button;
 }
 
-const Button = ({ onClick, className, innerText, type = 'submit' }: Partial<ButtonProps>) => {
+const Button = ({ onClick, className, innerText, type = 'submit' }: ButtonProps) => {
   return (
-    <BSButton onClick={onClick} className={className} type={type}>
+    <ShadcnButton onClick={onClick} className={className} type={type}>
       {innerText}
-    </BSButton>
+    </ShadcnButton>
   );
 };
 

@@ -1,14 +1,12 @@
-import type { FormControlProps } from 'react-bootstrap';
-import { FormControl } from 'react-bootstrap';
+import { Input as ShadcnInput } from '@/components/ui/input';
 
-interface InputProps {
-  onChange(props: FormControlProps): void;
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
   placeholder?: string;
 }
 
-const Input = ({ onChange, id, placeholder }: InputProps) => {
-  return <FormControl onChange={onChange} id={id} placeholder={placeholder} />;
+const Input = ({ onChange, id, placeholder, ...props }: InputProps) => {
+  return <ShadcnInput onChange={onChange} id={id} placeholder={placeholder} {...props} />;
 };
 
 export default Input;
