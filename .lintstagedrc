@@ -1,6 +1,6 @@
 {
   "*.{ts,tsx}": [
-    "yarn prettier:fix",
-    "yarn lint:fix"
+    "prettier --write",
+    "eslint --fix"
   ]
 }
