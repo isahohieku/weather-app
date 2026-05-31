@@ -38,7 +38,7 @@ const SearchBar = ({ onSearch, onLocate, isLocating }: ISearchBar) => {
       <button type="submit" className={styles.button}>
         Search
       </button>
-      {/* <button
+      <button
         type="button"
         className={`${styles.locationButton} ${isLocating ? styles.locationButtonLocating : ''}`}
         onClick={onLocate}
@@ -47,7 +47,7 @@ const SearchBar = ({ onSearch, onLocate, isLocating }: ISearchBar) => {
         title="Use my location"
       >
         <Navigation size={20} />
-      </button> */}
+      </button>
     </form>
   );
 };

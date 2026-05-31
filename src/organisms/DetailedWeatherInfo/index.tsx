@@ -18,7 +18,10 @@ const Icons: Record<string, Icon> = {
 };
 
 // Generate mock forecast data based on current weather
-const generateForecast = (weatherReport: WeatherResponse, convertTemp: (temp: number) => number, unit: string) => {
+const generateForecast = (
+  weatherReport: WeatherResponse,
+  convertTemp: (temp: number) => number,
+) => {
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const conditions = ['Clear', 'Clouds', 'Rain', 'Clear'];
   const today = new Date();
@@ -35,8 +38,7 @@ const generateForecast = (weatherReport: WeatherResponse, convertTemp: (temp: nu
 };
 
 const DetailedWeatherInfo = ({ weatherReport, convertTemp, unit }: Props) => {
-  const forecast = generateForecast(weatherReport, convertTemp, unit);
-  // Calculate precipitation from rain data or default to 0
+  const forecast = generateForecast(weatherReport, convertTemp);
   const precipitation = weatherReport.clouds?.all ?? 0;
 
   return (
@@ -49,7 +51,9 @@ const DetailedWeatherInfo = ({ weatherReport, convertTemp, unit }: Props) => {
         </div>
         <div className={styles.statRow}>
           <span className={styles.statLabel}>Humidity</span>
-          <span className={styles.statValue}>{fixToDecimalPlace(weatherReport.main.humidity, 0)} %</span>
+          <span className={styles.statValue}>
+            {fixToDecimalPlace(weatherReport.main.humidity, 0)} %
+          </span>
         </div>
         <div className={styles.statRow}>
           <span className={styles.statLabel}>Wind</span>
@@ -68,7 +72,9 @@ const DetailedWeatherInfo = ({ weatherReport, convertTemp, unit }: Props) => {
             >
               <ForecastIcon size={24} strokeWidth={1.5} />
               <span className={styles.forecastDay}>{day.day}</span>
-              <span className={styles.forecastTemp}>{day.temp}°{unit}</span>
+              <span className={styles.forecastTemp}>
+                {day.temp}°{unit}
+              </span>
             </div>
           );
         })}
