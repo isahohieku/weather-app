@@ -14,5 +14,16 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/setupTests.tsx',
+    coverage: {
+      exclude: [
+        'node_modules/',
+        'dist/',
+        '**/*.config.*',
+        '**/types/**',
+        '**/*.d.ts',
+        'src/index.tsx',
+        'src/components/ui/**', // Optional: if we don't want Shadcn components included
+      ],
+    },
   },
 });
