@@ -16,7 +16,6 @@ const WeatherPage = () => {
   const { coords, isLocating, error: geoError, getLocation } = useGeolocation();
   const { isLoading, isFetching, data, error } = useSearchWeather(currentSearch, coords);
 
-  // Auto-detect location on first load
   useEffect(() => {
     getLocation();
   }, [getLocation]);
@@ -26,7 +25,7 @@ const WeatherPage = () => {
   };
 
   const onLocate = () => {
-    setCurrentSearch(null); // Clear city search so coords take priority
+    setCurrentSearch(null);
     getLocation();
   };
 
@@ -45,7 +44,9 @@ const WeatherPage = () => {
     <div className={styles.page}>
       {/* Unit Toggle */}
       <div className={styles.toggleWrapper}>
-        <span className={`${styles.toggleLabel} ${unit === 'C' ? styles.activeLabel : ''}`}>°C</span>
+        <span className={`${styles.toggleLabel} ${unit === 'C' ? styles.activeLabel : ''}`}>
+          °C
+        </span>
         <button
           className={`${styles.toggleSwitch} ${unit === 'F' ? styles.toggleSwitchActive : ''}`}
           onClick={toggleUnit}
@@ -54,7 +55,9 @@ const WeatherPage = () => {
         >
           <span className={styles.toggleKnob} />
         </button>
-        <span className={`${styles.toggleLabel} ${unit === 'F' ? styles.activeLabel : ''}`}>°F</span>
+        <span className={`${styles.toggleLabel} ${unit === 'F' ? styles.activeLabel : ''}`}>
+          °F
+        </span>
       </div>
 
       {/* Search bar */}
@@ -73,8 +76,16 @@ const WeatherPage = () => {
       <div className={styles.contentSection}>
         {!isLoading && !isFetching && !error && data && (
           <div className={styles.weatherCard}>
-            <MainWeatherInfo weatherReport={data as WeatherResponse} convertTemp={convertTemp} unit={unit} />
-            <DetailedWeatherInfo weatherReport={data as WeatherResponse} convertTemp={convertTemp} unit={unit} />
+            <MainWeatherInfo
+              weatherReport={data as WeatherResponse}
+              convertTemp={convertTemp}
+              unit={unit}
+            />
+            <DetailedWeatherInfo
+              weatherReport={data as WeatherResponse}
+              convertTemp={convertTemp}
+              unit={unit}
+            />
           </div>
         )}
         {!isLoading && !isFetching && error && <ErrorView search={currentSearch} />}
