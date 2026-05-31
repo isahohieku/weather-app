@@ -1,0 +1,82 @@
+.wrapper {
+  width: 380px;
+  min-height: 340px;
+  border-radius: 0 20px 20px 0;
+  background-color: var(--black-pearl);
+  color: white;
+  padding: 35px 30px 25px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: -20px;
+  align-self: center;
+  z-index: 1;
+}
+
+/* Stats Section */
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.statRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.statLabel {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+.statValue {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Forecast Row */
+.forecastRow {
+  display: flex;
+  gap: 0;
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.forecastItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  min-width: 70px;
+  transition: background-color 0.3s ease;
+}
+
+.forecastItem:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.forecastItemActive {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.forecastItemActive:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.forecastDay {
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.forecastTemp {
+  font-size: 13px;
+  font-weight: 700;
+}

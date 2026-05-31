@@ -1,0 +1,110 @@
+.page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Unit Toggle */
+.toggleWrapper {
+  position: absolute;
+  top: 30px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toggleLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.3s ease;
+}
+
+.activeLabel {
+  color: white;
+}
+
+.toggleSwitch {
+  width: 48px;
+  height: 26px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.3s ease;
+  padding: 0;
+}
+
+.toggleSwitch:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.toggleSwitchActive .toggleKnob {
+  transform: translateX(22px);
+}
+
+.toggleKnob {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Search Section */
+.searchSection {
+  margin-top: 40px;
+  margin-bottom: 50px;
+}
+
+/* Content Section */
+.contentSection {
+  display: flex;
+  justify-content: center;
+}
+
+.weatherCard {
+  display: flex;
+  position: relative;
+}
+
+/* Loader */
+.loaderSection {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+/* Geolocation Error Toast */
+.geoError {
+  max-width: 600px;
+  margin: 0 auto 20px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(231, 76, 60, 0.15), rgba(230, 126, 34, 0.15));
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  color: #e74c3c;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
