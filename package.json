@@ -13,7 +13,7 @@
     "prettier": "prettier \"./**/*.{ts,tsx,md}\"",
     "prettier:fix": "yarn run prettier --write",
     "prettier:check": "yarn run prettier --check",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
