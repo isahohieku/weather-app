@@ -13,7 +13,7 @@ export const useSearchWeather = (
   // Query for city-based search
   const cityQuery = useQuery<WeatherResponse, WeatherErrorResponse>({
     queryKey: ['weatherReportByCity', search],
-    queryFn: () => getWeatherReportByCity(search!),
+    queryFn: () => getWeatherReportByCity(search),
     enabled: false,
     gcTime: cacheTime,
     retry: 0,
@@ -22,7 +22,7 @@ export const useSearchWeather = (
   // Query for coordinate-based search
   const coordsQuery = useQuery<WeatherResponse, WeatherErrorResponse>({
     queryKey: ['weatherReportByCoords', coords?.latitude, coords?.longitude],
-    queryFn: () => getWeatherReportByCoords(coords!.latitude, coords!.longitude),
+    queryFn: () => getWeatherReportByCoords(coords?.latitude, coords?.longitude),
     enabled: !!coords,
     gcTime: cacheTime,
     retry: 0,

@@ -1,11 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import MainWeatherInfo from './index';
 import { Conditions } from '../../types/weather';
+import type { WeatherResponse } from '../../types/weather';
 import { vi } from 'vitest';
 
 describe('MainWeatherInfo', () => {
   const mockConvertTemp = vi.fn((temp) => temp);
-  const baseWeatherReport: any = {
+  const baseWeatherReport = {
     weather: [{ main: Conditions.Clouds, description: 'overcast clouds', icon: '04d' }],
     main: { temp: 298.76 },
     name: 'Abuja',
@@ -15,10 +16,20 @@ describe('MainWeatherInfo', () => {
   it('renders default fallback icon when weather condition is unknown', () => {
     const weatherReport = {
       ...baseWeatherReport,
-      weather: [{ main: 'UnknownCondition' as any }],
+      weather: [
+        {
+          main: 'UnknownCondition' as unknown as Conditions,
+          description: 'overcast clouds',
+          icon: '04d',
+        },
+      ],
     };
     render(
-      <MainWeatherInfo weatherReport={weatherReport} convertTemp={mockConvertTemp} unit="C" />,
+      <MainWeatherInfo
+        weatherReport={weatherReport as unknown as WeatherResponse}
+        convertTemp={mockConvertTemp}
+        unit="C"
+      />,
     );
     // Testing the fallback Sun icon isn't straight-forward via query by role without specific data-testids,
     // but the branch is evaluated, which is what coverage checks.
@@ -32,7 +43,11 @@ describe('MainWeatherInfo', () => {
       sys: { country: '' },
     };
     render(
-      <MainWeatherInfo weatherReport={weatherReport} convertTemp={mockConvertTemp} unit="C" />,
+      <MainWeatherInfo
+        weatherReport={weatherReport as unknown as WeatherResponse}
+        convertTemp={mockConvertTemp}
+        unit="C"
+      />,
     );
     // It should render "Unknown, ??" inside the location p tag
     expect(screen.getByText(/Unknown, \?\?/)).toBeInTheDocument();

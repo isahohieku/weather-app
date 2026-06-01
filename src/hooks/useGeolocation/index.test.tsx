@@ -19,9 +19,19 @@ describe('useGeolocation', () => {
   });
 
   it('handles permission denied error', () => {
-    mockGeolocation.getCurrentPosition.mockImplementationOnce((success: any, error: any) => {
-      error({ code: 1, PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3 });
-    });
+    mockGeolocation.getCurrentPosition.mockImplementationOnce(
+      (
+        _: unknown,
+        error: (err: {
+          code: number;
+          PERMISSION_DENIED: number;
+          POSITION_UNAVAILABLE: number;
+          TIMEOUT: number;
+        }) => void,
+      ) => {
+        error({ code: 1, PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3 });
+      },
+    );
 
     const { result } = renderHook(() => useGeolocation());
 
@@ -36,9 +46,19 @@ describe('useGeolocation', () => {
   });
 
   it('handles position unavailable error', () => {
-    mockGeolocation.getCurrentPosition.mockImplementationOnce((success: any, error: any) => {
-      error({ code: 2, PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3 });
-    });
+    mockGeolocation.getCurrentPosition.mockImplementationOnce(
+      (
+        _,
+        error: (err: {
+          code: number;
+          PERMISSION_DENIED: number;
+          POSITION_UNAVAILABLE: number;
+          TIMEOUT: number;
+        }) => void,
+      ) => {
+        error({ code: 2, PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3 });
+      },
+    );
 
     const { result } = renderHook(() => useGeolocation());
 
@@ -52,9 +72,19 @@ describe('useGeolocation', () => {
   });
 
   it('handles timeout error', () => {
-    mockGeolocation.getCurrentPosition.mockImplementationOnce((success: any, error: any) => {
-      error({ code: 3, PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3 });
-    });
+    mockGeolocation.getCurrentPosition.mockImplementationOnce(
+      (
+        _,
+        error: (err: {
+          code: number;
+          PERMISSION_DENIED: number;
+          POSITION_UNAVAILABLE: number;
+          TIMEOUT: number;
+        }) => void,
+      ) => {
+        error({ code: 3, PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3 });
+      },
+    );
 
     const { result } = renderHook(() => useGeolocation());
 
@@ -68,9 +98,19 @@ describe('useGeolocation', () => {
   });
 
   it('handles unknown error', () => {
-    mockGeolocation.getCurrentPosition.mockImplementationOnce((success: any, error: any) => {
-      error({ code: 999, PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3 });
-    });
+    mockGeolocation.getCurrentPosition.mockImplementationOnce(
+      (
+        _,
+        error: (err: {
+          code: number;
+          PERMISSION_DENIED: number;
+          POSITION_UNAVAILABLE: number;
+          TIMEOUT: number;
+        }) => void,
+      ) => {
+        error({ code: 999, PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3 });
+      },
+    );
 
     const { result } = renderHook(() => useGeolocation());
 

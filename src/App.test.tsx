@@ -15,7 +15,9 @@ const server = setupServer(getWeatherReportResponse);
 
 Object.defineProperty(global.navigator, 'geolocation', {
   value: {
-    getCurrentPosition: (success: any) =>
+    getCurrentPosition: (
+      success: (position: { coords: { latitude: number; longitude: number } }) => void,
+    ) =>
       success({
         coords: {
           latitude: 51.1,
